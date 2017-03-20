@@ -10,7 +10,7 @@ import UIKit
 
 class UserDefaultsHelper: NSObject {
 
-    static let preferences = NSUserDefaults.standardUserDefaults()
+    static let preferences = UserDefaults.standard
     static let isSelectedKey = "isSelectedKey"
     static let userNameKey = "userNameKey"
 }

@@ -18,13 +18,13 @@ class ObjectToSave: NSObject, NSCoding {
     
     required init?(coder aDecoder: NSCoder) {
         
-        stringToSave = aDecoder.decodeObjectForKey("stringToSave") as? String ?? ""
+        stringToSave = aDecoder.decodeObject(forKey: "stringToSave") as? String ?? ""
         
         super.init()
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
+    func encode(with aCoder: NSCoder) {
         print("ObjectToSave encoded properly")
-        aCoder.encodeObject(stringToSave, forKey: "stringToSave")
+        aCoder.encode(stringToSave, forKey: "stringToSave")
     }
 }

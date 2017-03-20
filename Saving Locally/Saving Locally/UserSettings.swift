@@ -20,7 +20,7 @@ class UserSettings: NSObject, NSCoding {
         
         super.init()
         
-        guard let arrayOfObjects = aDecoder.decodeObjectForKey("arrayOfObjects") as? [ObjectToSave] else {
+        guard let arrayOfObjects = aDecoder.decodeObject(forKey: "arrayOfObjects") as? [ObjectToSave] else {
             
                 print("Decoding arrayOfObjects failed")
                 return
@@ -29,8 +29,8 @@ class UserSettings: NSObject, NSCoding {
         self.arrayOfObjects = arrayOfObjects
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
+    func encode(with aCoder: NSCoder) {
         print("UserSetting encoded properly")
-        aCoder.encodeObject(arrayOfObjects, forKey: "arrayOfObjects")
+        aCoder.encode(arrayOfObjects, forKey: "arrayOfObjects")
     }
 }

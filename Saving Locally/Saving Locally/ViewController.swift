@@ -22,13 +22,13 @@ class ViewController: UIViewController {
         
         // Do any additional setup after loading the view, typically from a nib.
         
-        isSelectedSwitch.on = UserDefaultsHelper.preferences.boolForKey(UserDefaultsHelper.isSelectedKey)
+        isSelectedSwitch.isOn = UserDefaultsHelper.preferences.bool(forKey: UserDefaultsHelper.isSelectedKey)
         
-        userNameTextField.text = UserDefaultsHelper.preferences.stringForKey(UserDefaultsHelper.userNameKey)
+        userNameTextField.text = UserDefaultsHelper.preferences.string(forKey: UserDefaultsHelper.userNameKey)
         
         savedUserSettingsArchivePath()
         
-        if let userSettings =  NSKeyedUnarchiver.unarchiveObjectWithFile(self.savedUserSettingsArchivePath()) as? UserSettings {
+        if let userSettings =  NSKeyedUnarchiver.unarchiveObject(withFile: self.savedUserSettingsArchivePath()) as? UserSettings {
             
             self.userSettings = userSettings
             
@@ -59,7 +59,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func userTappedSaveButton(sender: AnyObject) {
+    @IBAction func userTappedSaveButton(_ sender: AnyObject) {
         
         if userNameTextField.text != "" {
             
@@ -76,17 +76,17 @@ class ViewController: UIViewController {
         saveUserSettings()
     }
     
-    @IBAction func userTappedSwitch(sender: UISwitch) {
+    @IBAction func userTappedSwitch(_ sender: UISwitch) {
         
-        UserDefaultsHelper.preferences.setBool(sender.on, forKey: UserDefaultsHelper.isSelectedKey)
+        UserDefaultsHelper.preferences.set(sender.isOn, forKey: UserDefaultsHelper.isSelectedKey)
         
-        if sender.on {
+        if sender.isOn {
             
-            UserDefaultsHelper.preferences.setObject(userNameTextField.text, forKey: UserDefaultsHelper.userNameKey)
+            UserDefaultsHelper.preferences.set(userNameTextField.text, forKey: UserDefaultsHelper.userNameKey)
         }
         else {
             
-            UserDefaultsHelper.preferences.setObject("", forKey: UserDefaultsHelper.userNameKey)
+            UserDefaultsHelper.preferences.set("", forKey: UserDefaultsHelper.userNameKey)
         }
     }
     
@@ -100,12 +100,13 @@ class ViewController: UIViewController {
             return
         }
         
+        
         NSKeyedArchiver.archiveRootObject(userSettings, toFile: self.savedUserSettingsArchivePath())
     }
     
     func savedUserSettingsArchivePath() -> String {
         
-        let documentDirectories = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let documentDirectories = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         
         print("documentDirectories: \(documentDirectories)")
         
